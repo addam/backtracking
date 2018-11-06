@@ -7,45 +7,29 @@ import java.util.Stack;
 public class Backtracking {
     public List<Variable> variables = new ArrayList<Variable>();
 
-
-    public boolean solve() {
-        Stack<Variable> assigned = new Stack<Variable>();
-        while (!isDone()) {
-            Variable position = pickVariable();
-            if (position != null) {
-                assigned.push(position);
-            } else {
-                while (!assigned.peek().pickNextValue()) {
-                    assigned.pop();
-                    if (assigned.empty()) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
+    private Variable pickVariable() {
+        // TODO
+        // find a free variable
+        // note: you don't have to use this function in your code
     }
 
     private boolean isDone() {
-        for (Variable position : variables) {
-            if (position.isFree()) {
-                return false;
-            }
-        }
-        return true;
+        // TODO
+        // sudoku is done if all variables are assigned
+        // note: you don't have to use this function in your code
     }
 
-    private Variable pickVariable() {
-        for (Variable position : variables) {
-            if (position.isFree()) {
-                if (position.pickNextValue()) {
-                    return position;
-                } else {
-                    return null;
-                }
-            }
-        }
-        return null;
+    /**
+     * Try and solve the given constrained problem
+     * @return whether a solution was found
+     */
+    public boolean solve() {
+        // TODO
+        // maintain a LIFO stack of assigned variables throughout this function
+        // pick a free variable. If there are no free variables, the whole sudoku is solved!
+        // let the variable to pick a new value
+        //   if it found no more options, we need to unassign it and repeat with the variable assigned previously
+        //   if we had to repeat the previous step so many times that no variables are assigned, the sudoku has no solution.
     }
 
 }

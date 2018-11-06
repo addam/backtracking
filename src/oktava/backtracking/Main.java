@@ -6,6 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         Backtracking solver = emptySudoku();
+        // set the 2nd number in the 1st row to 3, just to make things less boring
         solver.variables.get(1).setValue(3);
         if (solver.solve()) {
             dumpSudoku(solver);
@@ -30,6 +31,7 @@ public class Main {
         for (int i=0; i < 9*9; i++) {
             result.variables.add(new SudokuVariable());
         }
+        // generate groups of numbers that have to be distinct
         ArrayList<ArrayList<Variable>> groups = new ArrayList<ArrayList<Variable>>();
         for (int i=0; i<9; i++) {
             ArrayList<Variable> row = new ArrayList<Variable>();
@@ -44,19 +46,19 @@ public class Main {
             groups.add(column);
             groups.add(block);
         }
+        // let the numbers within each group know about each other
         for (ArrayList<Variable> group : groups) {
             for (Variable a : group) {
                 SudokuVariable sa = (SudokuVariable) a;
                 for (Variable b : group) {
-                    if (a != b && !sa.neighbors.contains(b))
-                    ((SudokuVariable) a).neighbors.add((SudokuVariable) b);
+                    SudokuVariable sb = (SudokuVariable) b;
+                    if (a != b && !sa.neighbors.contains(sb)) {
+                        sb.neighbors.add(sb);
+                    }
                 }
             }
         }
         return result;
     }
 
-    private static int blockIndex(int i) {
-        return i % 3 + 9 * (i / 3);
-    }
 }
